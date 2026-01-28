@@ -1,0 +1,176 @@
+# Day 3 — Analytics Layer & Customer Intelligence (Consumer360)
+
+## Phase
+Week 2 — Advanced SQL Analytics
+
+## Focus
+RFM Modeling, Customer Segmentation, Cohort Analysis, Monthly Sales Marts
+
+---
+
+## Objectives
+
+- Build analytics-ready marts from the warehouse
+- Prepare data for dashboards and ML models
+- Implement RFM logic fully in SQL
+- Create customer segments for marketing
+- Generate cohort-retention datasets
+- Use SQL window functions in production style
+
+---
+
+## Architecture Update
+
+RAW → STAGING → DIMENSIONS → FACT → ANALYTICS MARTS
+
+New tables introduced:
+
+- mart_monthly_sales
+- mart_customer_rfm
+- mart_customer_rfm_scored
+- mart_customer_segments
+- mart_cohort_monthly
+
+---
+
+## Task 1 — Monthly Sales Mart
+
+### Table: mart_monthly_sales
+
+Aggregates:
+
+- total revenue by month
+- total units sold
+- number of invoices
+
+Purpose:
+
+- MoM growth analysis
+- seasonality detection
+- executive dashboards in Power BI
+
+---
+
+## Task 2 — RFM Base Table
+
+### Table: mart_customer_rfm
+
+Metrics calculated:
+
+- Recency = days since last purchase
+- Frequency = number of invoices
+- Monetary = total customer revenue
+
+Reference date:
+
+- latest invoice date in dataset
+
+Purpose:
+
+- foundation for segmentation
+- CLV modeling
+- churn detection
+
+---
+
+## Task 3 — RFM Scoring
+
+### Table: mart_customer_rfm_scored
+
+Window functions used:
+
+- NTILE(5) for recency
+- NTILE(5) for frequency
+- NTILE(5) for monetary
+
+Output:
+
+- r_score (1–5)
+- f_score (1–5)
+- m_score (1–5)
+
+Purpose:
+
+- normalize customers
+- compare across population
+
+---
+
+## Task 4 — Customer Segmentation
+
+### Table: mart_customer_segments
+
+Created:
+
+- rfm_cell (concatenation of scores)
+- segment label
+
+Segments:
+
+- Champion
+- Loyal
+- New Customers
+- At Risk
+- Lost
+- Regular
+
+Purpose:
+
+- marketing targeting
+- retention strategy
+- loyalty campaigns
+
+---
+
+## Task 5 — Cohort Analysis
+
+### Table: mart_cohort_monthly
+
+Cohorts defined by:
+
+- first purchase month
+
+Metrics tracked:
+
+- active customers per month
+- revenue per month
+
+Purpose:
+
+- retention heatmaps
+- churn analysis
+- lifecycle modeling
+
+---
+
+## Performance Considerations
+
+- Built from indexed fact and dimension tables
+- Aggregated marts reduce Power BI query cost
+- Enables fast dashboard refresh
+- Supports weekly automation pipeline
+
+---
+
+## Business Use Cases Enabled
+
+- Identify high-value customers (Champions)
+- Flag churn-risk segments
+- Monitor regional revenue growth
+- Measure cohort retention
+- Track seasonal sales patterns
+- Feed ML CLV models
+
+---
+
+## Day-3 Deliverables
+
+- Analytics marts created
+- RFM logic implemented in SQL
+- Customer segments finalized
+- Cohort tables prepared
+- SQL scripts saved in repository
+- Documentation updated
+
+---
+
